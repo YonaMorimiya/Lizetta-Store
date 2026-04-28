@@ -13,3 +13,5 @@ coverage/
 .cache
 prisma/*.db
 prisma/*.db-journal
+tsconfig.tsbuildinfo
+next-env.d.ts
