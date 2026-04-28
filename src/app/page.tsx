@@ -28,7 +28,7 @@ export default async function HomePage() {
             <Sparkles className="mr-1 h-3 w-3" /> Digital Goods · QRIS All-Bank
           </Badge>
           <h1 className="text-4xl font-bold leading-tight tracking-tight md:text-6xl">
-            Semua kebutuhan digital lo, <br />
+            Semua kebutuhan digital, <br />
             <span className="gradient-text">beres dalam 1 QR scan.</span>
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-lg text-muted-foreground">
