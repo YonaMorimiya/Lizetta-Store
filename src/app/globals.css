@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 6%;
+    --card-foreground: 0 0% 98%;
+    --primary: 330 81% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 270 95% 65%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 40%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 330 81% 60%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    background-image:
+      radial-gradient(at 20% 0%, hsl(330 81% 60% / 0.15) 0, transparent 40%),
+      radial-gradient(at 80% 10%, hsl(270 95% 65% / 0.12) 0, transparent 40%),
+      radial-gradient(at 0% 100%, hsl(210 90% 60% / 0.08) 0, transparent 40%);
+    background-attachment: fixed;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-pink-400 via-fuchsia-400 to-purple-400;
+}
+
+.glass {
+  @apply bg-white/[0.03] backdrop-blur-xl border border-white/10;
+}
+
+.card-hover {
+  @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-pink-500/10 hover:border-pink-500/30;
+}
+
+.shimmer-border {
+  background:
+    linear-gradient(hsl(var(--card)), hsl(var(--card))) padding-box,
+    linear-gradient(90deg, #ec4899, #a855f7, #ec4899) border-box;
+  background-size: 200% 100%;
+  border: 1px solid transparent;
+  animation: shimmer 3s linear infinite;
+}
