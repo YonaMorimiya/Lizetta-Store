@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import crypto from "crypto";
 import bcrypt from "bcryptjs";
 import { Role } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
@@ -108,6 +109,13 @@ async function runSeed() {
   };
 }
 
+function timingSafeEqualStrings(a: string, b: string): boolean {
+  const bufA = Buffer.from(a);
+  const bufB = Buffer.from(b);
+  if (bufA.length !== bufB.length) return false;
+  return crypto.timingSafeEqual(bufA, bufB);
+}
+
 function authorize(req: Request) {
   const expected = process.env.BOOTSTRAP_KEY;
   if (!expected) {
@@ -115,7 +123,7 @@ function authorize(req: Request) {
   }
   const url = new URL(req.url);
   const provided = url.searchParams.get("key") || req.headers.get("x-bootstrap-key");
-  if (provided !== expected) {
+  if (!provided || !timingSafeEqualStrings(provided, expected)) {
     return { ok: false, status: 401, error: "Unauthorized: missing or invalid key" };
   }
   return { ok: true as const };
