@@ -52,13 +52,17 @@ Default admin credentials (override di `.env`):
    - `ADMIN_EMAIL`, `ADMIN_PASSWORD`
    - `QRIS_STATIC_STRING` (hasil decode QR statis Orderkuota kamu)
    - `ORDERKUOTA_MERCHANT_ID`, `ORDERKUOTA_API_KEY`
-5. Deploy. Setelah build pertama, jalankan sekali:
-   ```bash
-   npx vercel env pull .env
-   pnpm db:push
-   pnpm db:seed
-   ```
-   atau gunakan Vercel's **Storage → Query** untuk menjalankan `prisma migrate`.
+5. Tambah `BOOTSTRAP_KEY` (rahasia sekali pakai untuk seed admin + produk sample) — generate dengan `openssl rand -hex 16`.
+6. Deploy. Build otomatis menjalankan `prisma db push` (bikin tabel kalau belum ada).
+7. Setelah deploy sukses, buka sekali (pakai salah satu cara):
+   - **Browser (gampang):** `https://<domain>.vercel.app/api/bootstrap?key=<BOOTSTRAP_KEY>`
+   - **curl (lebih aman, key ga masuk URL log):**
+     ```bash
+     curl -X POST -H "x-bootstrap-key: <BOOTSTRAP_KEY>" https://<domain>.vercel.app/api/bootstrap
+     ```
+   Endpoint ini idempotent — upsert admin + insert 6 produk contoh. Aman dipanggil ulang.
+
+8. **Setelah bootstrap sukses**, **rotate `BOOTSTRAP_KEY`** di Vercel (ganti ke nilai baru atau hapus env-nya). Ini mencegah kalau key-nya bocor dari browser history / server log, orang lain ga bisa reset admin password lewat endpoint ini.
 
 ## Cara set QRIS kamu
 

@@ -15,3 +15,8 @@ prisma/*.db
 prisma/*.db-journal
 tsconfig.tsbuildinfo
 next-env.d.ts
+
+# local test artifacts
+test-plan.md
+test-report.md
+
